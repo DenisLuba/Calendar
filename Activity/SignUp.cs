@@ -1,4 +1,6 @@
+using Android.Content;
 using Android.Views;
+using Android.Views.InputMethods;
 using AndroidX.AppCompat.App;
 using Firebase.Auth;
 using Google.Android.Material.Snackbar;
@@ -40,13 +42,15 @@ public class SignUp : AppCompatActivity, IOnClickListener
 
     public void OnClick(View? view)
     {
-        switch(view?.Id)
+        HideSoftKeyboard();
+
+        switch (view?.Id)
         {
             case Resource.Id.register_button:
                 {
                     if (CheckPasswords())
                         RegisterUser(emailEditText?.Text ?? "", passwordEditText?.Text ?? "");
-                    else Snackbar.Make(signUpLayout!, Resource.String.passwords_do_not_match, Snackbar.LengthLong);
+                    else Snackbar.Make(signUpLayout!, Resource.String.passwords_do_not_match, Snackbar.LengthLong).Show();
                 }
                 break;
             case Resource.Id.sign_in_clicked_text_view:
@@ -70,5 +74,14 @@ public class SignUp : AppCompatActivity, IOnClickListener
     {
 
     }
-    
+
+    public void HideSoftKeyboard()
+    {
+        var currentFocus = CurrentFocus;
+        if (currentFocus != null)
+        {
+            InputMethodManager? inputMethodManager = GetSystemService(Context.InputMethodService) as InputMethodManager;
+            inputMethodManager?.HideSoftInputFromWindow(currentFocus.WindowToken, HideSoftInputFlags.None);
+        }
+    }
 }
