@@ -16,7 +16,7 @@ namespace Calendar
         private EditText? emailEditText, passwordEditText;
         private TextView? signUpTextView, forgotPasswordTextView;
 
-        private RelativeLayout? activityMain;
+        private RelativeLayout? activityMainLayout;
 
         public static FirebaseApp? firebaseApp;
         private FirebaseAuth? firebaseAuth;
@@ -35,12 +35,12 @@ namespace Calendar
             InitFirebaseAuth(applicationId, apiKey);
             // View
             signInButton = FindViewById<Button>(Resource.Id.sign_in_button);
-            emailEditText = FindViewById<EditText>(Resource.Id.email_edit_text);
-            passwordEditText = FindViewById<EditText>(Resource.Id.password_edit_text);
+            emailEditText = FindViewById<EditText>(Resource.Id.login_email_edit_text);
+            passwordEditText = FindViewById<EditText>(Resource.Id.login_password_edit_text);
             signUpTextView = FindViewById<TextView>(Resource.Id.sign_up_clicked_text_view);
             forgotPasswordTextView = FindViewById<TextView>(Resource.Id.forgot_password_clicked_text_view);
 
-            activityMain = FindViewById<RelativeLayout>(Resource.Id.activity_main);
+            activityMainLayout = FindViewById<RelativeLayout>(Resource.Id.activity_main);
 
             signInButton?.SetOnClickListener(this);
             signUpTextView?.SetOnClickListener(this);
@@ -65,21 +65,15 @@ namespace Calendar
             switch (view?.Id)
             {
                 case Resource.Id.sign_in_button:
-                    {
-                        LoginUser(emailEditText?.Text ?? "", passwordEditText?.Text ?? "");
-                    }
+                    LoginUser(emailEditText?.Text ?? "", passwordEditText?.Text ?? "");
                     break;
                 case Resource.Id.sign_up_clicked_text_view:
-                    {
-                        StartActivity(new Android.Content.Intent(this, typeof(SignUp)));
-                        Finish();
-                    }
+                    StartActivity(new Android.Content.Intent(this, typeof(SignUp)));
+                    Finish();
                     break;
                 case Resource.Id.forgot_password_clicked_text_view:
-                    {
-                        StartActivity(new Android.Content.Intent(this, typeof(ForgotPassword)));
-                        Finish();
-                    }
+                    StartActivity(new Android.Content.Intent(this, typeof(ForgotPassword)));
+                    Finish();
                     break;
             }
         }
@@ -97,7 +91,7 @@ namespace Calendar
                 StartActivity(new Android.Content.Intent(this, typeof(DashBoard)));
                 Finish();
             }
-            else Snackbar.Make(activityMain!, "Login Success", Snackbar.LengthShort).Show();
+            else Snackbar.Make(activityMainLayout!, Resource.String.login_crash, Snackbar.LengthLong).Show();
         }
     }
 }

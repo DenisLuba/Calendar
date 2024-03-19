@@ -13,6 +13,20 @@
   <string name="or">OR</string>
   <string name="firebase_icon">Firebase icon</string>
 
+  <!--Register-->
+
+  <string name="button_register">Register</string>
+  <string name="sign_in">Already Account ? Login Me</string>
+  <string name="repeat_password">Repeat your password</string>
+
+  <!--MainActivity-->
+
+  <string name="login_crash">Login Cracsh!</string>
+
+  <!--SignUp-->
+
+  <string name="passwords_do_not_match">Passwords do not match!</string>
+
   <string name="application_id">1:590735467269:android:f36f854134098c1aa08d6c</string>
   <string name="api_key">"AIzaSyB6Qx0vLoXzVBe5c8ImqyuLSoK9kUiPgDQ"</string>
 </resources>

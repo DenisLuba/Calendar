@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/activity_main"
+    android:id="@+id/sign_up_layout"
     android:padding="16dp"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -16,14 +16,14 @@
         android:layout_height="100dp"/>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/login_input_email"
+        android:id="@+id/sign_up_input_email"
         android:layout_below="@id/icon"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true">
     
         <EditText
-            android:id="@+id/login_email_edit_text"
+            android:id="@+id/sign_up_email_edit_text"
             android:hint="@string/enter_email"
             android:inputType="textWebEmailAddress"
             android:maxLines="1"
@@ -32,14 +32,14 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/login_input_password"
-        android:layout_below="@id/login_input_email"
+        android:id="@+id/sign_up_input_password"
+        android:layout_below="@id/sign_up_input_email"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true">
     
         <EditText
-            android:id="@+id/login_password_edit_text"
+            android:id="@+id/sign_up_password_edit_text"
             android:hint="@string/enter_password"
             android:inputType="textWebPassword"
             android:maxLines="1"
@@ -47,21 +47,37 @@
             android:layout_height="wrap_content"/>
     </com.google.android.material.textfield.TextInputLayout>
 
-    <Button
-        android:id="@+id/sign_in_button"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/sign_up_repeat_password"
+        android:layout_below="@id/sign_up_input_password"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/login_input_password"
+        android:layout_centerInParent="true">
+    
+        <EditText
+            android:id="@+id/sign_up_repeat_password_edit_text"
+            android:hint="@string/repeat_password"
+            android:inputType="textWebPassword"
+            android:maxLines="1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <Button
+        android:id="@+id/register_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/sign_up_input_password"
         android:layout_marginTop="32dp"
         android:layout_marginBottom="16dp"
-        android:text="@string/button_sign_in"/>
+        android:text="@string/button_register"/>
 
-    <TextView
-        android:id="@+id/forgot_password_clicked_text_view"
+<!--    <TextView
+        android:id="@+id/sign_up_forgot_password_clicked_text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_below="@id/sign_in_button"
+        android:layout_below="@id/register_button"
         android:clickable="true"
         android:textStyle="bold"
         android:text="@string/forgot_password"
@@ -69,10 +85,10 @@
         style="@style/Widget.AppCompat.Button.Borderless"/>
 
     <LinearLayout
-        android:id="@+id/login_or"
+        android:id="@+id/sign_up_or"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/forgot_password_clicked_text_view"
+        android:layout_below="@id/sign_up_forgot_password_clicked_text_view"
         android:gravity="center"
         android:orientation="horizontal">
     
@@ -87,17 +103,17 @@
             android:layout_height="wrap_content"
             android:padding="4dp"
             android:text="@string/or"/>
-    </LinearLayout>
+    </LinearLayout>-->
 
     <TextView
-        android:id="@+id/sign_up_clicked_text_view"
+        android:id="@+id/sign_in_clicked_text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_below="@id/login_or"
+        android:layout_below="@id/register_button"
         android:clickable="true"
         android:textStyle="bold"
-        android:text="@string/sign_up"
+        android:text="@string/sign_in"
         android:textColor="@color/colorPrimaryDark"
         style="@style/Widget.AppCompat.Button.Borderless"/>
 

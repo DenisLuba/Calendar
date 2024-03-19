@@ -11,6 +11,7 @@
   </PropertyGroup>
   <ItemGroup>
     <None Remove="Resources\drawable\firebase_icon.xml" />
+    <None Remove="Resources\layout\sign_up.xml" />
     <None Remove="Resources\values\colors.xml" />
     <None Remove="Resources\values\styles.xml" />
   </ItemGroup>
