@@ -1,0 +1,80 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/dash_board_layout"
+    android:padding="16dp"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+  <ImageView
+      android:id="@+id/icon"
+      android:layout_alignParentTop="true"
+      android:layout_centerHorizontal="true"
+      android:src="@drawable/firebase_icon"
+      android:contentDescription="@string/firebase_icon"
+      android:layout_width="100dp"
+      android:layout_height="100dp"/>
+
+  <TextView
+      android:id="@+id/welcome_text_view"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_centerHorizontal="true"
+      android:layout_below="@id/icon"
+      android:textStyle="bold"
+      android:text="@string/welcome"
+      android:textColor="@color/colorPrimaryDark"
+      style="@style/Widget.AppCompat.Button.Borderless"/>
+
+  <com.google.android.material.textfield.TextInputLayout
+      android:id="@+id/welcome_password"
+      android:layout_below="@id/welcome_text_view"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="4dp"
+      android:layout_centerInParent="true">
+
+    <EditText
+      android:id="@+id/welcome_password_edit_text"
+      android:hint="@string/enter_new_password"
+      android:inputType="textWebPassword"
+      android:maxLines="1"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"/>
+  </com.google.android.material.textfield.TextInputLayout>
+
+  <com.google.android.material.textfield.TextInputLayout
+      android:id="@+id/welcome_repeat_password"
+      android:layout_below="@id/welcome_password"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="4dp"
+      android:layout_centerInParent="true">
+
+    <EditText
+        android:id="@+id/welcome_repeat_password_text_view"
+        android:hint="@string/repeat_password"
+        android:inputType="textWebPassword"
+        android:maxLines="1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+  </com.google.android.material.textfield.TextInputLayout>
+
+  <Button
+      android:id="@+id/welcome_new_password_button"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_below="@id/welcome_repeat_password"
+      android:layout_marginTop="32dp"
+      android:layout_marginBottom="16dp"
+      android:text="@string/button_change_password"/>
+  
+  <Button
+      android:id="@+id/welcome_logout_button"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_below="@id/welcome_new_password_button"
+      android:layout_marginTop="32dp"
+      android:layout_marginBottom="16dp"
+      android:text="@string/logout"/>
+</RelativeLayout>

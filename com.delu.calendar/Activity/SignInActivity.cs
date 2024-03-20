@@ -1,16 +1,17 @@
 using Android.Gms.Tasks;
 using Android.Views;
+using Android.Views.InputMethods;
 using AndroidX.AppCompat.App;
 using Firebase;
 using Firebase.Auth;
-using Google.Android.Material.Snackbar;
+using static Calendar.Util;
 using Microsoft.Maui.ApplicationModel;
 using static Android.Views.View;
 
 namespace Calendar
 {
     [Activity(Label = "@string/app_name", MainLauncher = true, Theme = "@style/AppTheme")]
-    public class MainActivity : AppCompatActivity, IOnClickListener, IOnCompleteListener
+    public class SignInActivity : AppCompatActivity, IOnClickListener, IOnCompleteListener
     {
         private Button? signInButton;
         private EditText? emailEditText, passwordEditText;
@@ -26,7 +27,7 @@ namespace Calendar
         {
             base.OnCreate(savedInstanceState);
             Platform.Init(this, savedInstanceState);
-            SetContentView(Resource.Layout.activity_main);
+            SetContentView(Resource.Layout.activity_sign_in);
 
             var applicationId = GetString(Resource.String.application_id);
             var apiKey = GetString(Resource.String.api_key);
@@ -40,7 +41,7 @@ namespace Calendar
             signUpTextView = FindViewById<TextView>(Resource.Id.sign_up_clicked_text_view);
             forgotPasswordTextView = FindViewById<TextView>(Resource.Id.forgot_password_clicked_text_view);
 
-            activityMainLayout = FindViewById<RelativeLayout>(Resource.Id.activity_main);
+            activityMainLayout = FindViewById<RelativeLayout>(Resource.Id.sign_in_layout);
 
             signInButton?.SetOnClickListener(this);
             signUpTextView?.SetOnClickListener(this);
@@ -49,12 +50,13 @@ namespace Calendar
 
         private void InitFirebaseAuth(string applicationId, string apiKey)
         {
-            if (firebaseAuth == null)
+            if (firebaseApp == null)
             {
                 var options = new FirebaseOptions.Builder()
                 .SetApplicationId(applicationId)
                 .SetApiKey(apiKey)
                 .Build();
+                
                 firebaseApp = FirebaseApp.InitializeApp(this, options);
             }
             firebaseAuth = FirebaseAuth.GetInstance(firebaseApp);
@@ -68,11 +70,12 @@ namespace Calendar
                     LoginUser(emailEditText?.Text ?? "", passwordEditText?.Text ?? "");
                     break;
                 case Resource.Id.sign_up_clicked_text_view:
-                    StartActivity(new Android.Content.Intent(this, typeof(SignUp)));
+                    //StartActivity(new Android.Content.Intent(this, typeof(SignUpActivity)));
+                    StartActivity(new Android.Content.Intent(this, typeof(DashBoardActivity)));
                     Finish();
                     break;
                 case Resource.Id.forgot_password_clicked_text_view:
-                    StartActivity(new Android.Content.Intent(this, typeof(ForgotPassword)));
+                    StartActivity(new Android.Content.Intent(this, typeof(ForgotPasswordActivity)));
                     Finish();
                     break;
             }
@@ -88,10 +91,10 @@ namespace Calendar
         {
             if (task.IsSuccessful)
             {
-                StartActivity(new Android.Content.Intent(this, typeof(DashBoard)));
+                StartActivity(new Android.Content.Intent(this, typeof(DashBoardActivity)));
                 Finish();
             }
-            else Snackbar.Make(activityMainLayout!, Resource.String.login_crash, Snackbar.LengthLong).Show();
+            else ShowToast(activityMainLayout!, Resource.String.login_failed);
         }
     }
 }
