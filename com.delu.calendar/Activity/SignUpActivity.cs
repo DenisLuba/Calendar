@@ -46,8 +46,13 @@ public class SignUpActivity : AppCompatActivity, IOnClickListener, IOnCompleteLi
         switch (view?.Id)
         {
             case Resource.Id.register_button:
-                if (CheckPasswords(signUpLayout!, passwordEditText?.Text ?? "", repeatPasswordEditText?.Text ?? ""))
-                    RegisterUser(emailEditText?.Text ?? "", passwordEditText?.Text ?? "");
+                var email = emailEditText!.Text;
+                var password = passwordEditText!.Text;
+                var repeatPassword = repeatPasswordEditText!.Text;
+
+                if (signUpLayout!.CheckPasswords(password, repeatPassword)
+                    && signUpLayout!.CheckRegistrationDetails(email, password))
+                    this.RegisterUser(firebaseAuth, email!, password!);
                 break;
             case Resource.Id.sign_in_clicked_text_view:
                 StartActivity(new Android.Content.Intent(this, typeof(SignInActivity)));
@@ -56,20 +61,14 @@ public class SignUpActivity : AppCompatActivity, IOnClickListener, IOnCompleteLi
         }
     }
 
-    private void RegisterUser(string email, string password)
-    {
-        firebaseAuth?.CreateUserWithEmailAndPassword(email, password)
-            .AddOnCompleteListener(this);
-    }
-
     public void OnComplete(Android.Gms.Tasks.Task task)
     {
         if (task.IsSuccessful)
         {
-            ShowToast(signUpLayout!, Resource.String.register_successfully);
+            signUpLayout!.ShowToast(Resource.String.register_successfully);
             StartActivity(new Android.Content.Intent(this, typeof(DashBoardActivity)));
             Finish();
         }
-        else ShowToast(signUpLayout!, Resource.String.register_failed);
+        else signUpLayout!.ShowToast(Resource.String.register_failed);
     }
 }

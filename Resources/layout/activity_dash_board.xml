@@ -22,6 +22,7 @@
       android:layout_centerHorizontal="true"
       android:layout_below="@id/icon"
       android:textStyle="bold"
+        android:textSize="24sp"
       android:text="@string/welcome"
       android:textColor="@color/colorPrimaryDark"
       style="@style/Widget.AppCompat.Button.Borderless"/>
@@ -52,7 +53,7 @@
       android:layout_centerInParent="true">
 
     <EditText
-        android:id="@+id/welcome_repeat_password_text_view"
+        android:id="@+id/welcome_repeat_password_edit_text"
         android:hint="@string/repeat_password"
         android:inputType="textWebPassword"
         android:maxLines="1"
@@ -66,7 +67,6 @@
       android:layout_height="wrap_content"
       android:layout_below="@id/welcome_repeat_password"
       android:layout_marginTop="32dp"
-      android:layout_marginBottom="16dp"
       android:text="@string/button_change_password"/>
   
   <Button
@@ -74,7 +74,6 @@
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:layout_below="@id/welcome_new_password_button"
-      android:layout_marginTop="32dp"
-      android:layout_marginBottom="16dp"
+      android:layout_marginTop="4dp"
       android:text="@string/logout"/>
 </RelativeLayout>

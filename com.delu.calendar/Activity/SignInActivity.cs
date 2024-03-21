@@ -17,7 +17,7 @@ namespace Calendar
         private EditText? emailEditText, passwordEditText;
         private TextView? signUpTextView, forgotPasswordTextView;
 
-        private RelativeLayout? activityMainLayout;
+        private RelativeLayout? signInLayout;
 
         public static FirebaseApp? firebaseApp;
         private FirebaseAuth? firebaseAuth;
@@ -33,7 +33,7 @@ namespace Calendar
             var apiKey = GetString(Resource.String.api_key);
 
             // Init Firebase
-            InitFirebaseAuth(applicationId, apiKey);
+            firebaseAuth = this.InitFirebaseAuth(firebaseApp, applicationId, apiKey);
             // View
             signInButton = FindViewById<Button>(Resource.Id.sign_in_button);
             emailEditText = FindViewById<EditText>(Resource.Id.login_email_edit_text);
@@ -41,37 +41,29 @@ namespace Calendar
             signUpTextView = FindViewById<TextView>(Resource.Id.sign_up_clicked_text_view);
             forgotPasswordTextView = FindViewById<TextView>(Resource.Id.forgot_password_clicked_text_view);
 
-            activityMainLayout = FindViewById<RelativeLayout>(Resource.Id.sign_in_layout);
+            signInLayout = FindViewById<RelativeLayout>(Resource.Id.sign_in_layout);
 
             signInButton?.SetOnClickListener(this);
             signUpTextView?.SetOnClickListener(this);
             forgotPasswordTextView?.SetOnClickListener(this);
         }
 
-        private void InitFirebaseAuth(string applicationId, string apiKey)
-        {
-            if (firebaseApp == null)
-            {
-                var options = new FirebaseOptions.Builder()
-                .SetApplicationId(applicationId)
-                .SetApiKey(apiKey)
-                .Build();
-                
-                firebaseApp = FirebaseApp.InitializeApp(this, options);
-            }
-            firebaseAuth = FirebaseAuth.GetInstance(firebaseApp);
-        }
-
         public void OnClick(View? view)
         {
+            HideSoftKeyboard(this);
+
             switch (view?.Id)
             {
                 case Resource.Id.sign_in_button:
-                    LoginUser(emailEditText?.Text ?? "", passwordEditText?.Text ?? "");
+                    var email = emailEditText!.Text;
+                    var password = passwordEditText!.Text;
+                    
+                    if (signInLayout!.CheckRegistrationDetails(email, password))
+                        this.LoginUser(firebaseAuth, email!, password!);
                     break;
                 case Resource.Id.sign_up_clicked_text_view:
-                    //StartActivity(new Android.Content.Intent(this, typeof(SignUpActivity)));
-                    StartActivity(new Android.Content.Intent(this, typeof(DashBoardActivity)));
+                    StartActivity(new Android.Content.Intent(this, typeof(SignUpActivity)));
+                    //StartActivity(new Android.Content.Intent(this, typeof(DashBoardActivity)));
                     Finish();
                     break;
                 case Resource.Id.forgot_password_clicked_text_view:
@@ -81,12 +73,6 @@ namespace Calendar
             }
         }
 
-        private void LoginUser(string email, string password)
-        {
-            firebaseAuth?.SignInWithEmailAndPassword(email, password)
-                .AddOnCompleteListener(this);
-        }
-
         public void OnComplete(Android.Gms.Tasks.Task task)
         {
             if (task.IsSuccessful)
@@ -94,7 +80,7 @@ namespace Calendar
                 StartActivity(new Android.Content.Intent(this, typeof(DashBoardActivity)));
                 Finish();
             }
-            else ShowToast(activityMainLayout!, Resource.String.login_failed);
+            else signInLayout!.ShowToast(Resource.String.login_failed);
         }
     }
 }

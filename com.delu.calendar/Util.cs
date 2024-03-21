@@ -1,4 +1,6 @@
 ﻿using Android.Content;
+using System.ComponentModel.DataAnnotations;
+using Android.Gms.Common;
 using Android.Views;
 using Android.Views.InputMethods;
 using Google.Android.Material.Snackbar;
@@ -12,27 +14,49 @@ namespace Calendar
 {
     internal static class Util
     {
-        public static void ShowToast(View view, int messageId) =>
+        public static void ShowToast(this View view, int messageId) =>
             Snackbar.Make(view, messageId, BaseTransientBottomBar.LengthLong).Show();
 
-        public static void ShowToast(View view, string message) =>
+        public static void ShowToast(this View view, string message) =>
             Snackbar.Make(view, message, BaseTransientBottomBar.LengthLong).Show();
 
-        public static bool CheckPasswords(View view, string password, string repeatPassword)
+        public static bool CheckEmail(this View view, string? email)
         {
-            if (password != repeatPassword)
+            if (email == null || email.Length == 0)
             {
-                ShowToast(view, Resource.String.passwords_do_not_match);
+                view.ShowToast(Resource.String.enter_email);
                 return false;
             }
-            if (password.Length == 0)
+            if (!new EmailAddressAttribute().IsValid(email))
             {
-                ShowToast(view, Resource.String.enter_password);
+                view.ShowToast(Resource.String.email_is_invalid);
                 return false;
             }
             return true;
         }
 
+        public static bool CheckPassword(this View view, string? password)
+        {
+            if (password == null || password.Length == 0)
+            {
+                view.ShowToast(Resource.String.enter_password);
+                return false;
+            }
+            return true;
+        }
+
+        public static bool CheckRegistrationDetails(this View view, string? email, string? password) =>
+            view.CheckEmail(email) && view.CheckPassword(password);
+
+        public static bool CheckPasswords(this View view, string? password, string? repeatPassword)
+        {
+            if (password != repeatPassword)
+            {
+                view.ShowToast(Resource.String.passwords_do_not_match);
+                return false;
+            }
+            return view.CheckPassword(password);
+        }
 
         public static void HideSoftKeyboard(Activity activity)
         {
