@@ -19,7 +19,6 @@ namespace Calendar
 
         private RelativeLayout? signInLayout;
 
-        public static FirebaseApp? firebaseApp;
         private FirebaseAuth? firebaseAuth;
 
 
@@ -33,7 +32,7 @@ namespace Calendar
             var apiKey = GetString(Resource.String.api_key);
 
             // Init Firebase
-            firebaseAuth = this.InitFirebaseAuth(firebaseApp, applicationId, apiKey);
+            firebaseAuth = this.InitFirebaseAuth(applicationId, apiKey);
             // View
             signInButton = FindViewById<Button>(Resource.Id.sign_in_button);
             emailEditText = FindViewById<EditText>(Resource.Id.login_email_edit_text);

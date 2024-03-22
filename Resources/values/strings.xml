@@ -25,6 +25,7 @@
   <string name="passwords_do_not_match">Passwords do not match!</string>
   <string name="register_successfully">Register successfully!</string>
   <string name="register_failed">Register failed!</string>
+  <string name="short_password">The password is too short\nEnter at least 6 characters</string>
 
   <!--Activity DashBoard-->
   <string name="welcome">Welcome, user!</string>
@@ -40,6 +41,10 @@
   <string name="forgot_password_text">We need your registered email\n to sent your password reset instructions</string>
   <string name="button_reset_password">Reset password</string>
   <string name="back">Back</string>
+
+  <!--ForgotActivity-->
+  <string name="reset_password_link">Reset password link sent to email: {0}</string>
+  <string name="reset_password_failed">Reset password failed</string>
 
   <!--Firebase data-->
   <string name="application_id">1:590735467269:android:f36f854134098c1aa08d6c</string>

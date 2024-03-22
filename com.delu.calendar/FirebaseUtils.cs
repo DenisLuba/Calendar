@@ -7,12 +7,15 @@ using System.Text;
 using System.Threading.Tasks;
 using Android.Content;
 using Android.Gms.Tasks;
+using System.Runtime.CompilerServices;
 
 namespace Calendar
 {
     internal static class FirebaseUtils
     {
-        public static FirebaseAuth InitFirebaseAuth(this Context context, FirebaseApp? firebaseApp, string applicationId, string apiKey)
+        public static FirebaseApp? firebaseApp;
+
+        public static FirebaseAuth InitFirebaseAuth(this Context context, string applicationId, string apiKey)
         {
             if (firebaseApp == null)
             {
@@ -53,6 +56,12 @@ namespace Calendar
                 activity.StartActivity(new Android.Content.Intent(activity, typeof(SignInActivity)));
                 activity.Finish();
             }
+        }
+
+        public static void ResetPassword(this IOnCompleteListener listener, Activity activity, FirebaseAuth? firebaseAuth, string email)
+        {
+            firebaseAuth?.SendPasswordResetEmail(email)
+                .AddOnCompleteListener(activity, listener);
         }
     }
 }

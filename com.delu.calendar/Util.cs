@@ -42,6 +42,11 @@ namespace Calendar
                 view.ShowToast(Resource.String.enter_password);
                 return false;
             }
+            if (password.Length < 6)
+            {
+                view.ShowToast(Resource.String.short_password);
+                return false;  
+            }
             return true;
         }
 

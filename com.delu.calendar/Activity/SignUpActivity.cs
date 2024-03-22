@@ -24,12 +24,12 @@ public class SignUpActivity : AppCompatActivity, IOnClickListener, IOnCompleteLi
         SetContentView(Resource.Layout.activity_sign_up);
 
         // Init Firebase
-        firebaseAuth = FirebaseAuth.GetInstance(SignInActivity.firebaseApp);
+        firebaseAuth = FirebaseAuth.GetInstance(FirebaseUtils.firebaseApp);
 
         // View
         registerButton = FindViewById<Button>(Resource.Id.register_button);
         emailEditText = FindViewById<EditText>(Resource.Id.sign_up_email_edit_text);
-        passwordEditText = FindViewById<EditText>(Resource.Id.sign_up_email_edit_text);
+        passwordEditText = FindViewById<EditText>(Resource.Id.sign_up_password_edit_text);
         repeatPasswordEditText = FindViewById<EditText>(Resource.Id.sign_up_repeat_password_edit_text);
         loginTextView = FindViewById<TextView>(Resource.Id.sign_in_clicked_text_view);
 
@@ -49,7 +49,10 @@ public class SignUpActivity : AppCompatActivity, IOnClickListener, IOnCompleteLi
                 var email = emailEditText!.Text;
                 var password = passwordEditText!.Text;
                 var repeatPassword = repeatPasswordEditText!.Text;
-
+                if (firebaseAuth == null)
+                {
+                    signUpLayout!.ShowToast("firebaseAuth is null");
+                }
                 if (signUpLayout!.CheckPasswords(password, repeatPassword)
                     && signUpLayout!.CheckRegistrationDetails(email, password))
                     this.RegisterUser(firebaseAuth, email!, password!);

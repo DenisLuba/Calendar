@@ -10,6 +10,7 @@ namespace Calendar;
 [Activity(Label = "DashBoard", Theme = "@style/AppTheme")]
 public class DashBoardActivity : AppCompatActivity, IOnClickListener, IOnCompleteListener
 {
+    private TextView? welcomeTextView;
     private EditText? passwordEditText, repeatPasswordEditText;
     private Button? newPasswordButton, logoutButton;
 
@@ -23,9 +24,10 @@ public class DashBoardActivity : AppCompatActivity, IOnClickListener, IOnComplet
         SetContentView(Resource.Layout.activity_dash_board);
 
         // Init Firebase
-        firebaseAuth = FirebaseAuth.GetInstance(SignInActivity.firebaseApp);
+        firebaseAuth = FirebaseAuth.GetInstance(FirebaseUtils.firebaseApp);
 
         // View
+        welcomeTextView = FindViewById<TextView>(Resource.Id.welcome_text_view);
         passwordEditText = FindViewById<EditText>(Resource.Id.welcome_password_edit_text);
         repeatPasswordEditText = FindViewById<EditText>(Resource.Id.welcome_repeat_password_edit_text);
         newPasswordButton = FindViewById<Button>(Resource.Id.welcome_new_password_button);
@@ -34,11 +36,15 @@ public class DashBoardActivity : AppCompatActivity, IOnClickListener, IOnComplet
         dashBoardLayout = FindViewById<RelativeLayout>(Resource.Id.dash_board_layout);
 
         newPasswordButton?.SetOnClickListener(this);
-        repeatPasswordEditText?.SetOnClickListener(this);
+        logoutButton?.SetOnClickListener(this);
+
+        welcomeTextView!.Text = $"Welcome,\n{firebaseAuth?.CurrentUser?.Email.Split("@")[0] ?? "User"}";
     }
 
     public void OnClick(View? view)
     {
+        HideSoftKeyboard(this);
+
         switch(view?.Id)
         {
             case Resource.Id.welcome_new_password_button:
@@ -50,6 +56,8 @@ public class DashBoardActivity : AppCompatActivity, IOnClickListener, IOnComplet
                 break;
             case Resource.Id.welcome_logout_button:
                 this.LogoutUser(firebaseAuth);
+                if (firebaseAuth?.CurrentUser == null)
+                    dashBoardLayout!.ShowToast("current user is null");
                 break;
         }
     }
